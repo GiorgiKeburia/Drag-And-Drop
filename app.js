@@ -1,26 +1,21 @@
-// const person: {
-//     name: string;
-//     age: number;
-// }
-var Role;
-(function (Role) {
-    Role[Role["ADMIN"] = 0] = "ADMIN";
-    Role[Role["READ_ONLY"] = 1] = "READ_ONLY";
-    Role[Role["AUTHOR"] = 2] = "AUTHOR";
-})(Role || (Role = {}));
-var person = {
-    name: "Maxim",
-    age: 30,
-    myArr: ['Giorgi', 'Keburia'],
-    role: Role.ADMIN
-};
-var myArr;
-// for(const value of person.myArr){
-//     console.log(value)
-// }
-if (person.role === Role.ADMIN) {
-    console.log("It is read User");
+function combine(input1, input2, resultConvertion) {
+    var result;
+    if (typeof input1 === "number" && typeof input2 === "number" || resultConvertion === "as-number") {
+        result = +input1 + +input2;
+    }
+    else {
+        result = input1.toString() + input2.toString();
+    }
+    return result;
+    // if (resultConvertion === "as-number") {
+    //     return +result;
+    // }else{
+    //     return result.toString()
+    // }
 }
-else {
-    console.log("Request denied");
-}
+var combinedAges = combine(30, 26, "as-number");
+console.log(combinedAges);
+var combinedStringAges = combine("30", "26", "as-number");
+console.log(combinedStringAges);
+var combinedNames = combine("Giorgi", "Keburia", "as-string");
+console.log(combinedNames);

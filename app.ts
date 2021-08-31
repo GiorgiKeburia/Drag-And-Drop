@@ -1,24 +1,27 @@
-// const person: {
-//     name: string;
-//     age: number;
-// }
+type Combinable = number | string;
+type ConversionDescription = 'as-number' | "as-string";
 
-enum Role { ADMIN, READ_ONLY, AUTHOR }
+function combine(input1: Combinable, input2: Combinable, resultConvertion: ConversionDescription) {
+    let result;
 
-const person = {
-    name: "Maxim",
-    age: 30,
-    myArr: ['Giorgi', 'Keburia'],
-    role: Role.ADMIN
+    if (typeof input1 === "number" && typeof input2 === "number" || resultConvertion === "as-number") {
+        result = +input1 + +input2
+    } else {
+        result = input1.toString() + input2.toString()
+    }
+    return result
+    // if (resultConvertion === "as-number") {
+    //     return +result;
+    // }else{
+    //     return result.toString()
+    // }
 }
 
-let myArr: string[];
+const combinedAges = combine(30, 26, "as-number");
+console.log(combinedAges)
 
-// for(const value of person.myArr){
-//     console.log(value)
-// }
-if (person.role === Role.ADMIN) {
-    console.log("Allowed! ")
-}else{
-    console.log("Request denied! ")
-}
+const combinedStringAges = combine("30", "26", "as-number");
+console.log(combinedStringAges)
+
+const combinedNames = combine("Giorgi", "Keburia", "as-string")
+console.log(combinedNames)
