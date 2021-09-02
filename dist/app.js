@@ -27,12 +27,32 @@ class AccountingDepartment extends Department {
     constructor(id, reports) {
         super(id, "Accounting");
         this.reports = reports;
+        this.lastReport = reports[0];
+    }
+    get mosrRecentReport() {
+        if (this.lastReport) {
+            return this.lastReport;
+        }
+        throw new Error("No report Found");
+    }
+    set mosrRecentReport(value) {
+        if (!value) {
+            throw new Error("Please pass in valid value");
+        }
+        this.addReports(value);
     }
     addReports(text) {
         this.reports.push(text);
+        this.lastReport = text;
     }
     printReports() {
         console.log(`Reports:  ${this.reports}`);
+    }
+    addEmployee(name) {
+        if (name === "Max") {
+            return;
+        }
+        this.employees.push(name);
     }
 }
 const it = new ITDepartment("ITD", ["Giorgi,Max"]);
@@ -42,6 +62,11 @@ it.printEmployeeInformation();
 console.log(it);
 const accounting = new AccountingDepartment("ADI", []);
 accounting.addReports("something went wrong...");
+accounting.addEmployee("Max");
+accounting.addEmployee("Levana");
+accounting.printEmployeeInformation();
+accounting.mosrRecentReport = "Data is not retrieved...";
+console.log(accounting.mosrRecentReport);
 accounting.printReports();
 // const accountCopy = { emploees: ['Giorgi'],neame: "Devops", describe: account.describe };
 // accountCopy.describe()

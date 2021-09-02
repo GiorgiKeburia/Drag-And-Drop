@@ -1,7 +1,7 @@
 class Department {
   // private readonly id: string;
   // private name: string;
-  private employees: string[] = [];
+  protected employees: string[] = [];
 
   constructor(private readonly id: string, private name: string) {}
 
@@ -21,37 +21,66 @@ class Department {
 class ITDepartment extends Department {
   admins: string[];
   constructor(id: string, admins: string[]) {
-    super(id,"ITDepartment");
-    this.admins = admins; 
+    super(id, "ITDepartment");
+    this.admins = admins;
   }
 }
 
 class AccountingDepartment extends Department {
-  constructor(id: string, private reports: string[]){
-    super(id, "Accounting")
+  private lastReport: string;
+
+  get mosrRecentReport(): string {
+    if (this.lastReport) {
+      return this.lastReport;
+    }
+    throw new Error("No report Found");
   }
 
-  addReports(text:string){
-    this.reports.push(text)
+  set mosrRecentReport(value: string) {
+    if (!value) {
+      throw new Error("Please pass in valid value");
+    }
+    this.addReports(value);
   }
 
-  printReports(){
+  constructor(id: string, private reports: string[]) {
+    super(id, "Accounting");
+    this.lastReport = reports[0];
+  }
+
+  addReports(text: string) {
+    this.reports.push(text);
+    this.lastReport = text;
+  }
+
+  printReports() {
     console.log(`Reports:  ${this.reports}`);
+  }
+
+  addEmployee(name: string) {
+    if (name === "Max") {
+      return;
+    }
+    this.employees.push(name);
   }
 }
 
-const it = new ITDepartment("ITD",["Giorgi,Max"]);
+const it = new ITDepartment("ITD", ["Giorgi,Max"]);
 it.describe();
 it.addEmployee("Giorgi");
 it.printEmployeeInformation();
 
 console.log(it);
 
-const accounting = new AccountingDepartment("ADI",[])
+const accounting = new AccountingDepartment("ADI", []);
 
-accounting.addReports("something went wrong...")
+accounting.addReports("something went wrong...");
+accounting.addEmployee("Max");
+accounting.addEmployee("Levana");
+accounting.printEmployeeInformation();
+accounting.mosrRecentReport = "Data is not retrieved..."
+console.log(accounting.mosrRecentReport);
 accounting.printReports()
-
 // const accountCopy = { emploees: ['Giorgi'],neame: "Devops", describe: account.describe };
 
 // accountCopy.describe()
