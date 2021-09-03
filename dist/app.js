@@ -1,32 +1,51 @@
 "use strict";
-class Person {
-    constructor(name, age) {
-        this.name = name;
-        this.age = age;
+const exapmle = true;
+const e1 = {
+    name: 'Giorgi',
+    privileges: ['Frontend-Developer'],
+    startDate: new Date(),
+};
+const e2 = {
+    name: 'Alexa',
+    startDate: new Date(),
+};
+function add(a, b) {
+    if (typeof a === 'string' || typeof b === 'string') {
+        return a.toString() + b.toString();
     }
-    greet(phrase) {
-        console.log(`${phrase} : ${this.name}`);
+    return a + b;
+}
+function printEmployeeInformation(emp) {
+    console.log(`Name: ${emp.name}`);
+    if ('privileges' in emp) {
+        console.log(`Privilages: ${emp.privileges}`);
     }
-    describe(describe) {
-        console.log(describe);
+    if ('startDate' in emp) {
+        console.log(`Start Date: ${emp.startDate}`);
     }
 }
-let user1;
-user1 = {
-    name: "Giorgi",
-    age: 20,
-    greet(phrase) {
-        console.log(`${phrase} : ${this.name}`);
-    },
-    describe(describe) {
-        console.log("object");
-    },
-};
-console.log(user1.name);
-user1.greet("Heloo my name is");
-user1.describe("This is interface OBJ");
-let add;
-add = (n1, n2) => {
-    return n1 + n2;
-};
-console.log(add(2, 3));
+printEmployeeInformation(e1);
+printEmployeeInformation(e2);
+class Car {
+    drive() {
+        console.log('Driving...');
+    }
+}
+class Truck {
+    drive() {
+        console.log('Driving a Truck ....');
+    }
+    loadCarGo(amount) {
+        console.log(`Loading carGo... ${amount}`);
+    }
+}
+const v1 = new Car();
+const v2 = new Truck();
+function useVehicle(vehicle) {
+    vehicle.drive();
+    if (vehicle instanceof Truck) {
+        vehicle.loadCarGo(1000);
+    }
+}
+useVehicle(v1);
+useVehicle(v2);
