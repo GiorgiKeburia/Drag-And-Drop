@@ -1,68 +1,70 @@
 "use strict";
-const names = [];
-const promise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-        resolve('This is done!');
-    }, 2000);
-});
-const O1 = {
-    firstName: 'Giorgi',
-    lastName: 'Keburia',
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-const O2 = {
-    ownerName: 'Menges',
-    ownerLastName: 'Delpiero',
-};
-function merge(objA, objB) {
-    return Object.assign(objA, objB);
+// AutoBind Decorator
+function autobind(_, _2, descriptor) {
+    const originalMethod = descriptor.value;
+    const adjDescriptor = {
+        configurable: true,
+        get() {
+            const boundFn = originalMethod.bind(this);
+            return boundFn;
+        },
+    };
+    return adjDescriptor;
 }
-const mergedObj = merge(O1, O2);
-mergedObj.firstName;
-function countAndPrint(element) {
-    let descriptionText = 'Got no value.';
-    if (element.length === 1) {
-        descriptionText = `Got 1 element.`;
-    }
-    if (element.length > 0) {
-        descriptionText = `Got ${element.length} elements.`;
-    }
-    return [element, descriptionText];
-}
-console.log(countAndPrint(['ss']));
-function extractAndConvert(obj, key) {
-    return obj[key];
-}
-console.log(extractAndConvert(O1, 'firstName'));
-class DataStorage {
+// Project Input Class
+class ProjectInput {
     constructor() {
-        this.data = [];
+        this.templateElement = document.getElementById('project-input');
+        this.hostElement = document.getElementById('app');
+        const importedNode = document.importNode(this.templateElement.content, true);
+        this.element = importedNode.firstElementChild;
+        this.element.id = 'user-input';
+        this.titleInputElement = this.element.querySelector('#title');
+        this.descriptionInputElement = this.element.querySelector('#description');
+        this.peopleInputElement = this.element.querySelector('#people');
+        this.configure();
+        this.attach();
     }
-    addItem(item) {
-        this.data.push(item);
+    clearInputes() {
+        this.titleInputElement.value = '';
+        this.descriptionInputElement.value = '';
+        this.peopleInputElement.value = '';
     }
-    removeItem(item) {
-        if (this.data.indexOf(item) === -1) {
+    gatherUserInput() {
+        const enteredTitle = this.titleInputElement.value;
+        const enteredDescription = this.descriptionInputElement.value;
+        const enteredPeople = this.peopleInputElement.value;
+        if (enteredTitle.trim().length === 0 || enteredDescription.trim().length === 0 || enteredPeople.trim().length === 0) {
+            alert('Invalid Input , Please try Again !!!');
             return;
         }
-        this.data.splice(this.data.indexOf(item), 1);
+        else {
+            return [enteredTitle, enteredDescription, +enteredPeople];
+        }
     }
-    getItems() {
-        return [...this.data];
+    submitHandler(event) {
+        event.preventDefault();
+        const userInput = this.gatherUserInput();
+        if (Array.isArray(userInput)) {
+            const [title, desc, people] = userInput;
+            console.log(title, desc, people);
+            this.clearInputes();
+        }
+    }
+    configure() {
+        this.element.addEventListener('submit', this.submitHandler);
+    }
+    attach() {
+        this.hostElement.insertAdjacentElement('afterbegin', this.element);
     }
 }
-const textStorage = new DataStorage();
-textStorage.addItem('user12212');
-textStorage.addItem('user12sdsd2');
-textStorage.addItem('user122782');
-const numStorage = new DataStorage();
-numStorage.addItem(12);
-numStorage.addItem(122);
-numStorage.addItem(889);
-function createCourseGoal(title, describtion, date) {
-    let courseGoal = {};
-    courseGoal.title = title;
-    courseGoal.describtion = describtion;
-    courseGoal.complateUntil = date;
-    return courseGoal;
-}
-const namesArr = ['Giorgi', 'Levana'];
+__decorate([
+    autobind
+], ProjectInput.prototype, "submitHandler", null);
+const projInput = new ProjectInput();
