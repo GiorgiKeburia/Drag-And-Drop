@@ -4,43 +4,60 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>ProjectManager</title>
-		<link rel="stylesheet" href="app.css" />
+		<title>Project Panel</title>
+		<link rel="stylesheet" href="./src/css/app.css" />
+		<!-- fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@100&display=swap" rel="stylesheet" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300&display=swap" rel="stylesheet" />
+		<!-- icon -->
+		<link rel="icon" href="./src/img/logo.png" />
 		<script src="dist/app.js" defer></script>
 	</head>
 	<body>
-		<template id="project-input">
-			<form>
-				<div class="form-control">
-					<label for="title">Title</label>
-					<input type="text" id="title" />
-				</div>
-				<div class="form-control">
-					<label for="description">Description</label>
-					<textarea id="description" rows="3"></textarea>
-				</div>
-				<div class="form-control">
-					<label for="people">People</label>
-					<input type="number" id="people" step="1" min="0" max="10" />
-				</div>
-				<button type="submit">Add Project</button>
-			</form>
-		</template>
-		<template id="single-project">
-			<li draggable="true">
-				<h2></h2>
-				<h3></h3>
-				<p></p>
-			</li>
-		</template>
-		<template id="project-list">
-			<section class="projects">
-				<header>
+		<div class="main">
+			<div class="header">
+				<img src="./src/img/logo.png" alt="" />
+				<h3>Project Panel</h3>
+			</div>
+
+			<template id="project-input">
+				<form class="form">
+					<h3 class="main-title">Here you Can Add New Project!</h3>
+					<div class="form-control">
+						<label class="title" for="title">Title</label>
+						<input class="input-size" type="text" id="title" />
+					</div>
+					<div class="form-control">
+						<label class="title" for="description">Description</label>
+						<textarea class="input-size" id="description" rows="3"></textarea>
+					</div>
+					<div class="form-control">
+						<label class="title" for="people">People</label>
+						<input class="input-size" type="number" id="people" step="1" min="0" max="10" />
+					</div>
+					<button type="submit">Add Project</button>
+				</form>
+			</template>
+			<template id="single-project">
+				<li draggable="true">
 					<h2></h2>
-				</header>
-				<ul></ul>
-			</section>
-		</template>
-		<div id="app"></div>
+					<h3></h3>
+					<p></p>
+				</li>
+			</template>
+			<template id="project-list">
+				<section class="projects">
+					<header>
+						<h2></h2>
+					</header>
+					<ul></ul>
+				</section>
+			</template>
+			<div id="app"></div>
+		</div>
 	</body>
 </html>
